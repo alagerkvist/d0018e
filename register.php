@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include 'include/conn.php';
+  require_once 'include/conn.php';
   if(isset($_SESSION['user'])){
     header("Location: index.php");
     exit();

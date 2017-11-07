@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include 'include/conn.php';
+  require_once 'include/conn.php';
   if(isset($_POST['login'])){
     $stmt = $conn->prepare("SELECT * FROM `user` WHERE email = ? AND password = ? LIMIT 1");
 
