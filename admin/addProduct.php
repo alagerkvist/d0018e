@@ -1,12 +1,14 @@
 <?php
+  require_once '../include/Person.php';
   session_start();
+  require_once 'checksession.php';
   require_once '../include/conn.php';
   if(isset($_POST['addProd'])){
     $stmt = $conn->prepare("INSERT INTO product (title,`desc`, qty, price, prodCatTitle) VALUES (?, ?, ?, ?, ?)");
     $stmt->bindParam(1, $_POST['title']);
     $stmt->bindParam(2, $_POST['desc']);
-    $stmt->bindParam(3, intval($_POST['qty']), PDO::PARAM_INT);
-    $stmt->bindParam(4, intval($_POST['price']), PDO::PARAM_INT);
+    $stmt->bindParam(3, $_POST['qty'], PDO::PARAM_INT);
+    $stmt->bindParam(4, $_POST['price'], PDO::PARAM_INT);
     $stmt->bindParam(5, $_POST['cat']);
     $stmt->execute();
     //header("Location: addProduct.php");

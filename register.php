@@ -1,7 +1,7 @@
 <?php
   session_start();
   include 'include/conn.php';
-  if(isset($_SESSION['userID'])){
+  if(isset($_SESSION['user'])){
     header("Location: /");
     exit();
   }

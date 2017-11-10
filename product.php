@@ -1,4 +1,5 @@
 <?php
+  require_once 'include/Person.php';
   session_start();
   require_once 'include/conn.php';
   function relocate(){

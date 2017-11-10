@@ -3,9 +3,9 @@
         session_start();
         //session_unset();
         //session_destroy();
-        unset($_SESSION['userID']);
-        unset($_SESSION['fName']);
-        unset($_SESSION['lName']);
+        unset($_SESSION['user']);
+        //unset($_SESSION['fName']);
+        //unset($_SESSION['lName']);
         header("Location: /");
         exit();
     }

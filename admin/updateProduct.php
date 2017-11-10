@@ -1,5 +1,7 @@
 <?php
+  require_once '../include/Person.php';
   session_start();
+  require_once 'checksession.php';
   require_once '../include/conn.php';
   function relocate(){
     header("Location: index.php");
@@ -25,7 +27,7 @@
     $stmt->bindParam(6, $_GET['id']);
     echo $_GET['id'];
     $stmt->execute();
-    header("Location: updateproduct.php?id=1");
+    header("Location: updateProduct.php?id=1");
     exit();
   }
 ?>

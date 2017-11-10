@@ -1,4 +1,5 @@
 <?php
+	require 'include/Person.php';
 	session_start();
 	include 'include/conn.php';
 ?>
@@ -6,7 +7,7 @@
 <html>
 <head>
 	<title>Home</title>
-	<link href="../CSS/styles.css" rel="stylesheet">
+	<link href="CSS/styles.css" rel="stylesheet">
 </head>
 <?php
 	require_once 'include/header.php';
