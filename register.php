@@ -1,15 +1,13 @@
 <?php
   session_start();
-  require_once 'include/conn.php';
-  if(isset($_SESSION['user'])){
-    header("Location: index.php");
+  include 'include/conn.php';
+  if(isset($_SESSION['userID'])){
+    header("Location: /");
     exit();
   }
-
   if(isset($_POST['sendRegister'])){
     $stmt = $conn->prepare("INSERT INTO `user` (fName, lName, address, password, email) VALUES
     (?, ?, ?, ?, ?)");
-
     $stmt->bindParam(1, $_POST['fName']);
     $stmt->bindParam(2, $_POST['lName']);
     $stmt->bindParam(3, $_POST['address']);
@@ -17,13 +15,16 @@
     $stmt->bindParam(5, $_POST['email']);
     $stmt->execute();
   }
-
 ?>
 
 <html>
 <head>
-  <title>Registrer</title>
+  <title>Register</title>
+  <link href="/CSS/styles.css" rel="stylesheet">
 </head>
+<?php
+	require_once 'include/header.php';
+?>
 <body>
   <form method="post" action="register.php">
   <p>First name: <input type="text" name="fName" /></p>
