@@ -27,7 +27,7 @@
     $stmt->bindParam(6, $_GET['id']);
     echo $_GET['id'];
     $stmt->execute();
-    header("Location: updateProduct.php?id=1");
+    header("Location: updateProduct.php?id=".$_GET['id']);
     exit();
   }
 ?>

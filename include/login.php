@@ -11,6 +11,7 @@
         if($stmt->rowCount() > 0){
           $sessionUser = new Person($user['userID'], $user['fName'], $user['lName'], $user['userType']);
           $_SESSION['user'] = $sessionUser;
+          
           /*
             //echo "LOGGED IN!";
             $_SESSION['userID'] = $user['userID'];

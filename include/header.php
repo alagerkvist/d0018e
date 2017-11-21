@@ -16,14 +16,16 @@
                         '.$_SESSION['user']->fname.' '.$_SESSION['user']->lname.'
                     </div>
                     <form method="post" action="/include/logout.php">
-            			<input class="navButton" type="submit" name="logout" value="Logout"/>
-            		</form>';
-
+            				<input class="navButton" type="submit" name="logout" value="Logout"/>
+            			</form>';
+									if(isset($_SESSION['cart'])){
+										print_r($_SESSION['cart']);
+									}
                 }
                 else{
                     echo'<div class="login">
                     <form method="post" action="/include/login.php">
-            			<div style="float:left; margin-top: 8px">
+            				<div style="float:left; margin-top: 8px">
             				<input type="text" name="email" placeholder="E-mail"/>
             				<br />
             				<input type="password" name="password" placeholder="Password"/>

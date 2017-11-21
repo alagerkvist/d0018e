@@ -18,6 +18,20 @@
   }
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
   $row = $stmt->fetch();
+
+  if(isset($_POST['addToCart'])){
+    if(!isset($_SESSION['user'])){
+      echo '<script language="javascript">alert("Login first!"); </script>';
+    }else{
+      $_SESSION['cart'][$_GET['id']] = 1;
+      $stmt = $conn->prepare("INSERT INTO basketItem (userID, productID, qty) VALUES
+      (?, ?, 1)");
+      $stmt->bindParam(1, $_SESSION['user']->id);
+      $stmt->bindParam(2, $_GET['id']);
+
+      $stmt->execute();
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,7 +58,16 @@
             <td>'.$row['qty'].'</td>
             <td>'.$row['price'].'</td>
             <td>'.$row['prodCatTitle'].'</td>
-            <td>'.$row['desc'].'</td>
+            <td>'.$row['desc'].'</td>';
+            if(!isset($_SESSION['cart'][$_GET['id']])){
+              echo '
+              <form method="post" action="product.php?id='.$row['productID'].'">
+              <td><input type="submit" name="addToCart" value="Add to cart!" /></td>
+              </form>';
+            }else{
+              echo '<td>Product already in cart!</td>';
+            }
+          echo '
           </tr>
         </table>';
       ?>
