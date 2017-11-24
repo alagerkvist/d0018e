@@ -7,6 +7,11 @@
     exit();
   }
 
+  if(!isset($_SESSION['cart'])){
+    header("Location: index.php");
+    exit();
+  }
+
   if(isset($_POST['remove'])){
 
     $stmt = $conn->prepare("DELETE FROM basketItem WHERE userID = ? and productID = ? LIMIT 1");
@@ -111,5 +116,7 @@
   ?>
 </table>
 <div id="products"></div>
+<a href="checkout.php"><button type="button">Chechout!</button></a>
+
 </body>
 </html>

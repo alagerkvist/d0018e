@@ -11,7 +11,12 @@
         if($stmt->rowCount() > 0){
           $sessionUser = new Person($user['userID'], $user['fName'], $user['lName'], $user['userType']);
           $_SESSION['user'] = $sessionUser;
-          
+          $basketStmt = $conn->prepare("SELECT * FROM basketItem WHERE userID = ?");
+          $basketStmt->bindParam(1, $user['userID']);
+          $basketStmt->execute();
+          while($row = $basketStmt->fetch()){
+            $_SESSION['cart'][$row['productID']] = $row['qty'];
+          }
           /*
             //echo "LOGGED IN!";
             $_SESSION['userID'] = $user['userID'];
