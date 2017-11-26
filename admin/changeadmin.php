@@ -20,12 +20,15 @@
   }
   ?>
 
-  <html>
+<html>
   <head>
-  <title>Add product</title>
+  <title>Manage Accounts</title>
+  <link href="../CSS/styles.css" rel="stylesheet">
   </head>
+  <?php
+  	//require_once '../include/header.php';
+  ?>
   <body>
-
     <?php
       echo '<form method="post" action="changeadmin.php">
       <p>
@@ -39,6 +42,6 @@
       </p>
       <p><input type="submit" name="downgrade" value="Downgrade" /><input type="submit" name="admin" value="Make admin" /></p>
       </form>';
-      ?>
-    </body>
-  </html>
+    ?>
+  </body>
+</html>

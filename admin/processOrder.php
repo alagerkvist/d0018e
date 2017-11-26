@@ -20,8 +20,8 @@ if(isset($_POST['update'])){
 
 <html>
 <head>
+  <link href="../CSS/styles.css" rel="stylesheet">
   <script language="javascript">
-
     function show(x){
       let a = document.getElementById(x);
       if(a.style.display == "none" ){
@@ -33,6 +33,9 @@ if(isset($_POST['update'])){
 
   </script>
 </head>
+<?php
+  require_once '../include/header.php';
+?>
 <body>
 <?php
 
