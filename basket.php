@@ -2,12 +2,12 @@
   require_once 'include/Person.php';
   session_start();
   require_once 'include/conn.php';
-  if(!isset($_SESSION['user'])){
+  if(!isset($_SESSION['user'] )){
     header("Location index.php");
     exit();
   }
 
-  if(!isset($_SESSION['cart'])){
+  if((!isset($_SESSION['cart'])) || empty($_SESSION['cart'])){
     header("Location: index.php");
     exit();
   }
@@ -77,7 +77,7 @@
 	</script>
 </head>
   <?php
-  require_once 'include/header.php';
+    require_once 'include/header.php';
   ?>
 <body>
   <table>
