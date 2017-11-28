@@ -11,6 +11,8 @@ if(isset($_POST['update'])){
       $stmt->bindParam(1, $value);
       $stmt->bindParam(2, $id);
       $stmt->execute();
+
+      //UPDATE `product` SET `qty` = `qty`- qty WHERE productID = productID
     }
   }
   header("Location: processOrder.php");
