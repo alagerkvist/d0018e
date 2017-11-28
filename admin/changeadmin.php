@@ -1,6 +1,7 @@
 <?php
+  require_once '../include/Person.php';
   session_start();
-  //require_once 'checksession.php';
+  require_once 'checksession.php';
   require_once '../include/conn.php';
 
   if(isset($_POST['downgrade'])){
@@ -26,7 +27,7 @@
   <link href="../CSS/styles.css" rel="stylesheet">
   </head>
   <?php
-  	//require_once '../include/header.php';
+  	require_once '../include/header.php';
   ?>
   <body>
     <?php
