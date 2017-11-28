@@ -21,37 +21,38 @@
   }
 ?>
 
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Add product</title>
-  <link href="../CSS/styles.css" rel="stylesheet">
-</head>
-<?php
-	require_once '../include/header.php';
-?>
-<body>
-  <form method="post" action="addProduct.php">
-    <p>Title: <input type="text" name="title" /></p>
-    <p>Price: <input type="text" name="price" /></p>
-    <p>Qty: <input type="text" name="qty" /></p>
-    <p>
-      <select name="cat">
-      <?php
-        $stmt = $conn->query("SELECT * FROM prodCat");
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        while($row = $stmt->fetch()){
-          echo '<option value='.$row['title'].'>'.$row['title'].'</option>';
-        }
-      ?>
-      </select>
-    </p>
-    <p>Description: <br /><textarea cols="50" rows="5" name="desc"></textarea></p>
-    <p><input type="submit" name="addProd" value="Add product!" /></p>
-  </form>
-  <br>
-  <form method="post" action="addProduct.php">
-    <p>Title: <input type="text" name="title" /></p>
-    <p><input type="submit" name="addCat" value="Add category!" /></p>
-  </form>
-</body>
+  <head>
+    <title>Add product</title>
+    <link href="../CSS/styles.css" rel="stylesheet">
+  </head>
+  <?php
+  	require_once '../include/header.php';
+  ?>
+  <body>
+    <form method="post" action="addProduct.php">
+      <p>Title: <input type="text" name="title" /></p>
+      <p>Price: <input type="text" name="price" /></p>
+      <p>Qty: <input type="text" name="qty" /></p>
+      <p>
+        <select name="cat">
+        <?php
+          $stmt = $conn->query("SELECT * FROM prodCat");
+          $stmt->setFetchMode(PDO::FETCH_ASSOC);
+          while($row = $stmt->fetch()){
+            echo '<option value='.$row['title'].'>'.$row['title'].'</option>';
+          }
+        ?>
+        </select>
+      </p>
+      <p>Description: <br /><textarea cols="50" rows="5" name="desc"></textarea></p>
+      <p><input type="submit" name="addProd" value="Add product!" /></p>
+    </form>
+    <br>
+    <form method="post" action="addProduct.php">
+      <p>Title: <input type="text" name="title" /></p>
+      <p><input type="submit" name="addCat" value="Add category!" /></p>
+    </form>
+  </body>
 </html>

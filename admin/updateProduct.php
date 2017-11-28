@@ -32,12 +32,12 @@
   }
 ?>
 
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Add product</title>
-</head>
-<body>
-
+  <head>
+    <title>Add product</title>
+  </head>
+  <body>
     <?php
       $stmt->setFetchMode(PDO::FETCH_ASSOC);
       $row = $stmt->fetch();
@@ -60,6 +60,6 @@
       <p>Description: <br /><textarea cols="50" rows="5" name="desc">'.$row['desc'].'</textarea></p>
       <p><input type="submit" name="updateProd" value="Update product!" /></p>
       </form>';
-      ?>
-    </body>
+    ?>
+  </body>
 </html>

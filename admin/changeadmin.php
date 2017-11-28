@@ -20,7 +20,8 @@
     exit();
   }
   ?>
-
+  
+<!DOCTYPE html>
 <html>
   <head>
   <title>Manage Accounts</title>
