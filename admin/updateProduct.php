@@ -73,10 +73,11 @@
         <th>Category</th>
         <th>Visible</th>';
         while($row = $stmt->fetch()){
+          $visible = ($row['visible'] == 1) ? 'Active' : 'Removed';
           echo '<tr>
           <td>'.$row['title'].'</td>
           <td>'.$row['prodCatTitle'].'</td>
-          <td>'.$row['visible'].'</td>
+          <td>'.$visible.'</td>
           <td><a href="updateProduct.php?id='.$row['productID'].'"><button type="button">Edit</button></a></td>
           </tr>';
         }

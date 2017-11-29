@@ -34,7 +34,8 @@ if(isset($_POST['purchase'])){
     unset($_SESSION['totalPrice']);
     $conn->commit();
 
-    echo '<script language="javascript">alert("Thank you for your purchase");</script>';
+    echo '<script language="javascript">alert("Thank you for your purchase");
+    location.href = "/"</script>';
   }catch(Exception $e){
     echo 'purcahse didnt go thru';
     echo $e;
@@ -42,15 +43,17 @@ if(isset($_POST['purchase'])){
   }
 }
 
-echo 'CHECKOUT FFS!';
 ?>
 <head>
+  <link href="CSS/styles.css" rel="stylesheet">
 
 </head>
 
 <body>
 
     <?php
+    require_once 'include/header.php';
+
     if(isset($_SESSION['cart'])){
       echo '<table>
         <tr>
