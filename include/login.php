@@ -23,10 +23,14 @@
             $_SESSION['fName'] = $user['fName'];
             $_SESSION['lName'] = $user['lName'];
           */
+          header("Location: /");
+          exit();
         }else{
-            //echo "WRONG PASS";
+            echo '<script language="javascript">
+            alert("Wrong credential");
+            location.href = "/";
+            </script>';
         }
     }
-    header("Location: /");
-    exit();
+
 ?>
