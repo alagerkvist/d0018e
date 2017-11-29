@@ -6,7 +6,7 @@
   */
 
   $serverAddress = "localhost";
-  $dbName = "myDatabase"
+  $dbName = "myDatabase";
   $userName = "username";
   $password = "password";
 

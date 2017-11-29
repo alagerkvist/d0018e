@@ -1,6 +1,6 @@
 <?php
   include 'include/conn.php';
-  $stmt = $conn->prepare("SELECT * FROM product WHERE title LIKE CONCAT('%', ?, '%') OR prodCatTitle LIKE CONCAT('%', ?, '%')");
+  $stmt = $conn->prepare("SELECT * FROM product WHERE (title LIKE CONCAT('%', ?, '%') OR prodCatTitle LIKE CONCAT('%', ?, '%')) AND visible = 1");
   $stmt->bindParam(1, $_GET['search']);
   $stmt->bindParam(2, $_GET['search']);
   $stmt->execute();

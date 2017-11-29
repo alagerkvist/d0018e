@@ -8,6 +8,7 @@
 					<button class="navButton">Admin</button>
 					<div class="dropdownContent">
 						<a href="/admin/addProduct.php">Add Product/Category</a>
+						<a href="/admin/updateProduct.php">Update/remove product</a>
 						<a href="/admin/changeadmin.php">Manage Accounts</a>
 						<a href="/admin/processOrder.php">Manage Orders</a>
 					</div>

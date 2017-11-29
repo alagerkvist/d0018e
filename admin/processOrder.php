@@ -36,11 +36,11 @@ if(isset($_POST['update'])){
 
     </script>
   </head>
-  <?php
-    require_once '../include/header.php';
-  ?>
+
   <body>
     <?php
+      require_once '../include/header.php';
+    
       function getData($orderStatus, $conn){
         $stmtProcessing = $conn->query("SELECT * FROM `order` WHERE orderStatus = '".$orderStatus."' ORDER BY orderDate");
         $stmtProcessing->setFetchMode(PDO::FETCH_ASSOC);
