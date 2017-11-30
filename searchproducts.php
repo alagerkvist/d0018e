@@ -1,8 +1,14 @@
 <?php
   include 'include/conn.php';
-  $stmt = $conn->prepare("SELECT * FROM product WHERE (title LIKE CONCAT('%', ?, '%') OR prodCatTitle LIKE CONCAT('%', ?, '%')) AND visible = 1");
-  $stmt->bindParam(1, $_GET['search']);
-  $stmt->bindParam(2, $_GET['search']);
+  if(isset($_GET['cat'])){
+    $stmt = $conn->prepare("SELECT * FROM product WHERE title LIKE CONCAT ('%', ?, '%') AND prodCatTitle = ?");
+    $stmt->bindParam(1, $_GET['search']);
+    $stmt->bindParam(2, $_GET['cat']);
+  }else{
+    $stmt = $conn->prepare("SELECT * FROM product WHERE (title LIKE CONCAT('%', ?, '%') OR prodCatTitle LIKE CONCAT('%', ?, '%')) AND visible = 1 ORDER BY prodCatTitle, title");
+    $stmt->bindParam(1, $_GET['search']);
+    $stmt->bindParam(2, $_GET['search']);
+  }
   $stmt->execute();
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
   echo '<table>

@@ -14,6 +14,18 @@
 		<link href="CSS/styles.css" rel="stylesheet">
 		<script language="javascript">
 
+			function test(){
+				let x = document.getElementById("cars");
+				let searchText = document.getElementById("searchword");
+				if(x.value == "all"){
+					searchText.value = "";
+				}else{
+					searchText.value = x.value;
+
+				}
+				searchproducts();
+			}
+
 			function searchproducts(){
 				let inputElt = document.getElementById("searchword");
 				let word = inputElt.value;
@@ -29,7 +41,12 @@
 						document.getElementById("products").innerHTML = xmlhttp.responseText;
 					}
 				}
-				xmlhttp.open('GET','searchproducts.php?search='+word,true);
+				let searchCat = document.getElementById("cars").value;
+				if(searchCat == "all"){
+					xmlhttp.open('GET','searchproducts.php?search='+word,true);
+				}else{
+					xmlhttp.open('GET','searchproducts.php?search='+word+'&cat='+searchCat,true);		
+				}
 				xmlhttp.send();
 			}
 
@@ -42,7 +59,18 @@
 		require_once 'include/header.php';
 	?>
 	<body>
-		<p>Search <input type="text" id="searchword" onkeyup="searchproducts();" /></p>
+		<p>Search <input type="text" id="searchword" onkeyup="searchproducts();" />
+		<?php
+			$stmt = $conn->query("SELECT * FROM `prodCat` ORDER BY title");
+			echo '<select id="cars" onchange="searchproducts();">
+			<option value="all">All</option>';
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			while($row = $stmt->fetch()){
+				echo '<option value="'.$row['title'].'">'.$row['title'].'</option>';
+			}
+			echo ' </select>';
+		?>
+	</p>
 		<div id="products"></div>
 	</body>
 
