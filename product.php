@@ -23,11 +23,12 @@
     if(!isset($_SESSION['user'])){
       echo '<script language="javascript">alert("Login first!"); </script>';
     }else{
-      $_SESSION['cart'][$_GET['id']] = 1;
-      $stmt = $conn->prepare("INSERT INTO basketItem (userID, productID, qty) VALUES
-      (?, ?, 1)");
+      $_SESSION['cart'][$_GET['id']] = array(1, $row['price']);
+      $stmt = $conn->prepare("INSERT INTO basketItem (userID, productID, qty, price) VALUES
+      (?, ?, 1, ?)");
       $stmt->bindParam(1, $_SESSION['user']->id);
       $stmt->bindParam(2, $_GET['id']);
+      $stmt->bindParam(3, $row['price']);
 
       $stmt->execute();
     }

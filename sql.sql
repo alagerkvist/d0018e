@@ -50,6 +50,7 @@ CREATE TABLE `orderSpec`(
        orderID int(11) NOT NULL,
        productID int(11) NOT NULL,
        qty int(11) NOT NULL,
+       price int(11) NOT NULL,
        PRIMARY KEY(orderID, productID),
        FOREIGN KEY(orderID) REFERENCES `order`(orderID),
        FOREIGN KEY(productID) REFERENCES product(productID)
@@ -70,6 +71,7 @@ CREATE TABLE `basketItem`(
        userID int(11) NOT NULL,
        productID int(11) NOT NULL,
        qty int(11) NOT NULL,
+       price int(11) NOT NULL,
        PRIMARY KEY(userID, productID),
        FOREIGN KEY(userID) REFERENCES `user`(userID),
        FOREIGN KEY(productID) REFERENCES product(productID)

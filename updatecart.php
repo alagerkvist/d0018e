@@ -9,8 +9,9 @@
     $stmt->bindParam(2, $_SESSION['user']->id);
     $stmt->bindParam(3, $_GET['id']);
     $stmt->execute();
-    $_SESSION['cart'][$_GET['id']] = $_GET['qty'];
+    $_SESSION['cart'][$_GET['id']][0] = $_GET['qty'];
     echo 'Product updated!';
+    print_r($_SESSION['cart']);
   }catch(Exception $e){
     echo 'Not a number';
   }

@@ -15,7 +15,7 @@
           $basketStmt->bindParam(1, $user['userID']);
           $basketStmt->execute();
           while($row = $basketStmt->fetch()){
-            $_SESSION['cart'][$row['productID']] = $row['qty'];
+            $_SESSION['cart'][$row['productID']] = array($row['qty'], $row['price']);
           }
           /*
             //echo "LOGGED IN!";

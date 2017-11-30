@@ -40,7 +40,7 @@ if(isset($_POST['update'])){
   <body>
     <?php
       require_once '../include/header.php';
-    
+
       function getData($orderStatus, $conn){
         $stmtProcessing = $conn->query("SELECT * FROM `order` WHERE orderStatus = '".$orderStatus."' ORDER BY orderDate");
         $stmtProcessing->setFetchMode(PDO::FETCH_ASSOC);
@@ -73,7 +73,7 @@ if(isset($_POST['update'])){
               <td><input type="radio" name="'.$row['orderID'].'" value="Declined" /></td>';
             }
           echo '</tr>';
-          $stmtOrderSpec = $conn->query("SELECT t1.*, t2.title, t2.productID, t2.price FROM `orderSpec` as t1, `product` as t2 WHERE t1.orderID = ".$row['orderID']." AND t2.productID = t1.productID");
+          $stmtOrderSpec = $conn->query("SELECT t1.*, t2.title, t2.productID FROM `orderSpec` as t1, `product` as t2 WHERE t1.orderID = ".$row['orderID']." AND t2.productID = t1.productID");
           $stmtOrderSpec->setFetchMode(PDO::FETCH_ASSOC);
           echo '
           <tr>

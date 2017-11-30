@@ -45,7 +45,7 @@
 				if(searchCat == "all"){
 					xmlhttp.open('GET','searchproducts.php?search='+word,true);
 				}else{
-					xmlhttp.open('GET','searchproducts.php?search='+word+'&cat='+searchCat,true);		
+					xmlhttp.open('GET','searchproducts.php?search='+word+'&cat='+searchCat,true);
 				}
 				xmlhttp.send();
 			}
