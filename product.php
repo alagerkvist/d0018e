@@ -125,18 +125,18 @@
             }
           echo '
           </tr>
-        </table>';
+        </table>
+        <h3>Comment Section</h3>';
 
-        $stmtRating = $conn->prepare("SELECT *.t1, fname.t2, lname.t2 FROM t1 as ratings, t2 as user WHERE t1.productID = ? AND t1.userID = t2.userID ORDER BY t1.commentDate");
+        $stmtRating = $conn->prepare("SELECT t1.*, t2.fname, t2.lname FROM ratings as t1, user as t2 WHERE t1.productID = ? AND t1.userID = t2.userID ORDER BY t1.commentDate");
         $stmtRating->bindParam(1, $_GET['id']);
         $stmtRating->execute();
         $stmtRating->setFetchMode(PDO::FETCH_ASSOC);
         while($rad = $stmtRating->fetch()){
           $rating = ($rad['rating'] != NULL) ? 'Giving rating: '.$rad['rating'] : '';
           $comment = ($rad['comment'] != NULL) ? $rad['comment'] : '';
-          echo '<p>User :'.$rad['userID'].' '.$rating.'</p>
+          echo '<p>'.$rad['fname'].' '.$rad['lname'].' '.$rating.'</p>
           <p>'.$comment.'</p>';
-          echo $rad['fname'];
         }
       ?>
   </body>
@@ -171,7 +171,7 @@
       }
 
       echo '
-        <p><textarea cols="70" rows="10" name="commentArea">'.$commentValue.'</textarea></p>
+        <p><textarea cols="70" rows="10" name="commentArea" style="resize: none;">'.$commentValue.'</textarea></p>
         <p>';
         for($i = 1; $i <= 5; $i++){
           if($i == $ratingValue){
