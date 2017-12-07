@@ -101,3 +101,12 @@ header{
 	margin-top: 0px;
 	margin-right: 0px;
 }
+
+.commentbox{
+	position: fixed;
+	width: auto;
+	height: auto;
+	bottom: 0;
+	background-color: black;
+	color: white;
+}

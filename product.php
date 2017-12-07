@@ -16,6 +16,40 @@
   }else{
     relocate();
   }
+
+  if(isset($_POST['commentAndRate'])){
+
+    if(isset($_POST['rating']) || ($_POST['commentArea'] != NULL)){
+
+      if(!isset($_POST['rating'])){
+        $_POST['rating'] = NULL;
+      }
+
+      if(isset($_SESSION['update'])){
+
+        $stmtUpdateRatings = $conn->prepare("UPDATE `ratings` SET rating = ?, comment = ? WHERE productID = ? AND userID = ?");
+        $stmtUpdateRatings->bindParam(1, $_POST['rating']);
+        $stmtUpdateRatings->bindParam(2, $_POST['commentArea']);
+        $stmtUpdateRatings->bindParam(3, $_GET['id']);
+        $stmtUpdateRatings->bindParam(4, $_SESSION['user']->id);
+        $stmtUpdateRatings->execute();
+
+      }else{
+        $stmtInsertRatings = $conn->prepare("INSERT INTO `ratings` (userID, productID, rating, comment) VALUES (?, ?, ?, ?)");
+        $stmtInsertRatings->bindParam(1, $_SESSION['user']->id);
+        $stmtInsertRatings->bindParam(2, $_GET['id']);
+        $stmtInsertRatings->bindParam(3, $_POST['rating']);
+        $stmtInsertRatings->bindParam(4, $_POST['commentArea']);
+        $stmtInsertRatings->execute();
+
+      }
+      header("Location: product.php?id=".$_GET['id']);
+      exit();
+    }else{
+      echo 'You have to send something in';
+    }
+  }
+
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
   $row = $stmt->fetch();
 
@@ -31,7 +65,9 @@
       $stmt->bindParam(3, $row['price']);
 
       $stmt->execute();
+
     }
+    //Add header location
   }
 ?>
 <!DOCTYPE html>
@@ -39,6 +75,21 @@
   <head>
     <title><?php echo $row['prodCatTitle'].' - '.$row['title']; ?></title>
     <link href="/CSS/styles.css" rel="stylesheet">
+    <script language="javascript">
+
+      function showHideComment(but){
+        let formElt = document.getElementById("formRate");
+        if(formElt.style.display == "none"){
+          formElt.style.display = "";
+          but.innerHTML = "Hide";
+          console.log(but);
+        }else{
+          formElt.style.display = "none";
+          but.innerHTML = "Show";
+        }
+
+      }
+    </script>
   </head>
   <?php
   require_once 'include/header.php';
@@ -61,16 +112,83 @@
             <td>'.$row['prodCatTitle'].'</td>
             <td>'.$row['desc'].'</td>';
             if(!isset($_SESSION['cart'][$_GET['id']])){
-              echo '
-              <form method="post" action="product.php?id='.$row['productID'].'">
-              <td><input type="submit" name="addToCart" value="Add to cart!" /></td>
-              </form>';
+              if($row['qty'] > 0){
+                echo '
+                <form method="post" action="product.php?id='.$row['productID'].'">
+                <td><input type="submit" name="addToCart" value="Add to cart!" /></td>
+                </form>';
+              }else{
+                echo '<td> Out of stock</td>';
+              }
             }else{
               echo '<td>Product already in cart!</td>';
             }
           echo '
           </tr>
         </table>';
+
+        $stmtRating = $conn->prepare("SELECT *.t1, fname.t2, lname.t2 FROM t1 as ratings, t2 as user WHERE t1.productID = ? AND t1.userID = t2.userID ORDER BY t1.commentDate");
+        $stmtRating->bindParam(1, $_GET['id']);
+        $stmtRating->execute();
+        $stmtRating->setFetchMode(PDO::FETCH_ASSOC);
+        while($rad = $stmtRating->fetch()){
+          $rating = ($rad['rating'] != NULL) ? 'Giving rating: '.$rad['rating'] : '';
+          $comment = ($rad['comment'] != NULL) ? $rad['comment'] : '';
+          echo '<p>User :'.$rad['userID'].' '.$rating.'</p>
+          <p>'.$comment.'</p>';
+          echo $rad['fname'];
+        }
       ?>
   </body>
+
+  <div class="commentbox">
+    <?php
+      if(isset($_SESSION['user'])){
+    ?>
+    <h3 style="display: inline;">Your rating</h3>
+    <button type="button" id="buttonComment" onclick="showHideComment(this);" style="float: right;">Hide</button>
+    <?php
+      $stmtComment = $conn->prepare("SELECT * FROM ratings  WHERE productID = ? AND userID = ? LIMIT 1");
+      $stmtComment->bindParam(1, $_GET['id']);
+      $stmtComment->bindParam(2, $_SESSION['user']->id);
+      $stmtComment->execute();
+      $commentsAndRating = $stmtComment->fetch(PDO::FETCH_ASSOC);
+      $ratingValue = ($commentsAndRating['rating'] != NULL) ? $commentsAndRating['rating'] : '';
+      $commentValue = ($commentsAndRating['comment'] != NULL) ? $commentsAndRating['comment'] : '';
+
+      echo '<form method="post" action="product.php?id='.$_GET['id'].'" id="formRate">';
+
+      if($stmtComment->rowCount() > 0){
+        echo '<script language="javascript">
+          document.getElementById("formRate").style.display = "none";
+          document.getElementById("buttonComment").innerHTML = "Show";
+        </script>';
+        $_SESSION['update'] = true;
+      }else{
+        if(isset($_SESSION['update'])){
+          unset($_SESSION['update']);
+        }
+      }
+
+      echo '
+        <p><textarea cols="70" rows="10" name="commentArea">'.$commentValue.'</textarea></p>
+        <p>';
+        for($i = 1; $i <= 5; $i++){
+          if($i == $ratingValue){
+            echo '<input type="radio" name="rating" checked value="'.$i.'" id="'.$i.'">
+            <label for="'.$i.'">'.$i.'</label>';
+          }else{
+            echo '<input type="radio" name="rating" value="'.$i.'" id="'.$i.'">
+            <label for="'.$i.'">'.$i.'</label>';
+          }
+        }
+        echo '
+        <input type="submit" name="commentAndRate" value="Comment" style="float: right;"/></p>
+        </form>';
+    }else{
+      echo 'Login to comment';
+    }
+
+    ?>
+  </div>
 </html>

@@ -22,6 +22,7 @@
 					<p>
 	      </div>
 				<a class="navButton" href="/basket.php">Basket</a>
+				<a class="navButton" href="/myorders.php">Orders</a>
 	      <form method="post" action="/include/logout.php">
 					<input class="navButton" type="submit" name="logout" value="Logout"/>
 				</form>

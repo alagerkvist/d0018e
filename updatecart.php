@@ -11,7 +11,6 @@
     $stmt->execute();
     $_SESSION['cart'][$_GET['id']][0] = $_GET['qty'];
     echo 'Product updated!';
-    print_r($_SESSION['cart']);
   }catch(Exception $e){
     echo 'Not a number';
   }

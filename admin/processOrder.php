@@ -7,11 +7,33 @@ require_once '../include/conn.php';
 if(isset($_POST['update'])){
   foreach($_POST as $id => $value){
     if($id != "update"){
-      $stmt = $conn->prepare("UPDATE `order` SET `orderStatus` = ? WHERE orderID = ?");
-      $stmt->bindParam(1, $value);
-      $stmt->bindParam(2, $id);
-      $stmt->execute();
+      try{
+        $conn->beginTransaction();
+        $stmtUpdateOrder = $conn->prepare("UPDATE `order` SET `orderStatus` = ? WHERE orderID = ?");
+        $stmtUpdateOrder->bindParam(1, $value);
+        $stmtUpdateOrder->bindParam(2, $id);
+        $stmtUpdateOrder->execute();
 
+        if($value == "Accepted"){
+          $stmtSelectOrder = $conn->prepare("SELECT qty, productID FROM `orderSpec` WHERE orderID = ?");
+          $stmtSelectOrder->bindParam(1, $id);
+          $stmtSelectOrder->execute();
+          $stmtSelectOrder->setFetchMode(PDO::FETCH_ASSOC);
+
+          while($row = $stmtSelectOrder->fetch()){
+            $stmtUpdateQty = $conn->prepare("UPDATE `product` SET `qty` = `qty`- ? WHERE productID = ?");
+            $stmtUpdateQty->bindParam(1, $row['qty']);
+            $stmtUpdateQty->bindParam(2, $row['productID']);
+            $stmtUpdateQty->execute();
+          }
+        }
+        $conn->commit();
+        //echo 'Updating went prefct';
+      }catch(Exception $e){
+        //echo 'BIG NO!<br />';
+        //echo $e;
+        $conn->rollBack();
+      }
       //UPDATE `product` SET `qty` = `qty`- qty WHERE productID = productID
     }
   }

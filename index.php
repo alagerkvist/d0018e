@@ -14,18 +14,6 @@
 		<link href="CSS/styles.css" rel="stylesheet">
 		<script language="javascript">
 
-			function test(){
-				let x = document.getElementById("cars");
-				let searchText = document.getElementById("searchword");
-				if(x.value == "all"){
-					searchText.value = "";
-				}else{
-					searchText.value = x.value;
-
-				}
-				searchproducts();
-			}
-
 			function searchproducts(){
 				let inputElt = document.getElementById("searchword");
 				let word = inputElt.value;

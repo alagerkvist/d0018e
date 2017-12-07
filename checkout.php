@@ -12,11 +12,6 @@ if(!isset($_SESSION['cart'])){
   exit();
 }
 
-if(!isset($_POST['checkout'])){
-  header("Location: basket.php");
-  exit();
-}
-
 if(isset($_POST['purchase'])){
   try{
     $conn->beginTransaction();
@@ -47,6 +42,10 @@ if(isset($_POST['purchase'])){
     echo $e;
     $conn->rollBack();
   }
+}
+if(!isset($_POST['checkout'])){
+  header("Location: basket.php");
+  exit();
 }
 
 ?>

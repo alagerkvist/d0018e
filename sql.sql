@@ -31,6 +31,7 @@ CREATE TABLE `product`(
        price int(11) NOT NULL,
        prodCatTitle varchar(32) NOT NULL,
        visible BOOLEAN DEFAULT TRUE NOT NULL,
+       CHECK (qty >= 0),
        PRIMARY KEY(productID),
        FOREIGN KEY(prodCatTitle) REFERENCES prodCat(title)
 );
@@ -61,6 +62,7 @@ CREATE TABLE `ratings`(
        productID int(11) NOT NULL,
        rating int(1),
        comment text,
+       commentDate datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
        CHECK ((rating >= 1 AND rating <= 5) OR rating =NULL),
        PRIMARY KEY(userID, productID),
        FOREIGN KEY(userID) REFERENCES `user`(userID),
