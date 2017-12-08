@@ -22,7 +22,6 @@ if(isset($_POST['purchase'])){
     $getOrderIdSQL = $conn->query("SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'davjom5db' AND TABLE_NAME = 'order' ");
     $getOrderId = $getOrderIdSQL->fetch(PDO::FETCH_ASSOC);
     $orderID = $getOrderId['AUTO_INCREMENT']-1;
-    echo $orderID;
     foreach($_SESSION['cart'] as $id => $qtyPrice){
       $stmtOrderSpec = $conn->prepare("INSERT INTO `orderSpec` (orderID, productID, qty, price) VALUES (".$orderID.", ?, ?, ?)");
       $stmtOrderSpec->bindParam(1, $id);

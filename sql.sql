@@ -15,6 +15,7 @@ CREATE TABLE `user`(
        userType ENUM('Admin', 'Customer') DEFAULT 'Customer' NOT NULL,
        password varchar(64) NOT NULL,
        email varchar(128) NOT NULL,
+       UNIQUE (email),
        PRIMARY KEY(userID)
 );
 

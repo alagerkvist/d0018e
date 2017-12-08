@@ -61,5 +61,4 @@
 	</p>
 		<div id="products"></div>
 	</body>
-
 </html>

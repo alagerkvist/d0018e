@@ -126,6 +126,7 @@
           echo '
           </tr>
         </table>
+        <img src="pic/'.$_GET['id'].'" style="width: auto; height: auto; max-width: 20%; max-height: 20%;" />
         <h3>Comment Section</h3>';
 
         $stmtRating = $conn->prepare("SELECT t1.*, t2.fname, t2.lname FROM ratings as t1, user as t2 WHERE t1.productID = ? AND t1.userID = t2.userID ORDER BY t1.commentDate");

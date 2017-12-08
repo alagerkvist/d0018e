@@ -13,6 +13,7 @@
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
   echo '<table>
   <tr>
+    <th></th>
     <th>Title</th>
     <th>Quantity</th>
     <th>Price</th>
@@ -20,6 +21,7 @@
   </tr>';
   while($row = $stmt->fetch()){
     echo '<tr>
+    <td><img src="/pic/'.$row['productID'].'" width="20" height="20" /></td>
     <td><a href="product.php?id='.$row['productID'].'">'.$row['title'].'</a></td>
     <td>'.$row['qty'].'</td>
     <td>'.$row['price'].'</td>
