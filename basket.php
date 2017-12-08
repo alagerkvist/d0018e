@@ -56,6 +56,12 @@
                 break;
               }
             }
+            if(xmlhttp.responseText == 'Not a number'){
+              document.getElementById("checkoutbut").disabled = true;
+            }else{
+              document.getElementById("checkoutbut").disabled = false;
+
+            }
   					document.getElementById("products").innerHTML = xmlhttp.responseText;
   				}
   			}
@@ -127,7 +133,7 @@
 </table>
 <div id="products"></div>
 <form method="post" action="checkout.php">
-  <button type="submit" name="checkout">Chechout!</button>
+  <button type="submit" name="checkout" id="checkoutbut">Chechout!</button>
 </form>
 
 </body>

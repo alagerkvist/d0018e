@@ -24,30 +24,60 @@
       if(!isset($_POST['rating'])){
         $_POST['rating'] = NULL;
       }
+      try{
+        $conn->beginTransaction();
+        if(isset($_SESSION['update'])){
 
-      if(isset($_SESSION['update'])){
+          $stmtUpdateRatings = $conn->prepare("UPDATE `ratings` SET rating = ?, comment = ? WHERE productID = ? AND userID = ?");
+          $stmtUpdateRatings->bindParam(1, $_POST['rating']);
+          $stmtUpdateRatings->bindParam(2, $_POST['commentArea']);
+          $stmtUpdateRatings->bindParam(3, $_GET['id']);
+          $stmtUpdateRatings->bindParam(4, $_SESSION['user']->id);
+          $stmtUpdateRatings->execute();
 
-        $stmtUpdateRatings = $conn->prepare("UPDATE `ratings` SET rating = ?, comment = ? WHERE productID = ? AND userID = ?");
-        $stmtUpdateRatings->bindParam(1, $_POST['rating']);
-        $stmtUpdateRatings->bindParam(2, $_POST['commentArea']);
-        $stmtUpdateRatings->bindParam(3, $_GET['id']);
-        $stmtUpdateRatings->bindParam(4, $_SESSION['user']->id);
-        $stmtUpdateRatings->execute();
+        }else{
 
-      }else{
-        $stmtInsertRatings = $conn->prepare("INSERT INTO `ratings` (userID, productID, rating, comment) VALUES (?, ?, ?, ?)");
-        $stmtInsertRatings->bindParam(1, $_SESSION['user']->id);
-        $stmtInsertRatings->bindParam(2, $_GET['id']);
-        $stmtInsertRatings->bindParam(3, $_POST['rating']);
-        $stmtInsertRatings->bindParam(4, $_POST['commentArea']);
-        $stmtInsertRatings->execute();
+          $stmtInsertRatings = $conn->prepare("INSERT INTO `ratings` (userID, productID, rating, comment) VALUES (?, ?, ?, ?)");
+          $stmtInsertRatings->bindParam(1, $_SESSION['user']->id);
+          $stmtInsertRatings->bindParam(2, $_GET['id']);
+          $stmtInsertRatings->bindParam(3, $_POST['rating']);
+          $stmtInsertRatings->bindParam(4, $_POST['commentArea']);
+          $stmtInsertRatings->execute();
 
+        }
+
+        $stmtGetCountRating = $conn->prepare("SELECT rating FROM ratings WHERE productID = ?");
+        $stmtGetCountRating->bindParam(1, $_GET['id']);
+        $stmtGetCountRating->execute();
+        $stmtGetCountRating->setFetchMode(PDO::FETCH_ASSOC);
+        $counter = 0;
+        $totalRating = 0;
+        while($rad = $stmtGetCountRating->fetch()){
+          if($rad['rating'] != NULL){
+            $counter++;
+            $totalRating += $rad['rating'];
+          }
+        }
+
+        if($counter != 0){
+          $avg = $totalRating / $counter;
+          $stmtUpdateProd = $conn->prepare("UPDATE `product` SET avgRating = ? WHERE productID = ?");
+          $stmtUpdateProd->bindParam(1, $avg);
+          $stmtUpdateProd->bindParam(2, $_GET['id']);
+          $stmtUpdateProd->execute();
+        }
+        $conn->commit();
+        header("Location: product.php?id=".$_GET['id']);
+        exit();
+
+      }catch(Exception $e){
+        $conn->rollBack();
+        echo 'Something went wrong';
       }
-      header("Location: product.php?id=".$_GET['id']);
-      exit();
     }else{
       echo 'You have to send something in';
     }
+
   }
 
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -96,7 +126,7 @@
   ?>
   <body>
     <?php
-      echo'
+    echo'
         <table>
           <tr>
             <th>Title</th>
@@ -126,7 +156,8 @@
           echo '
           </tr>
         </table>
-        <img src="pic/'.$_GET['id'].'" style="width: auto; height: auto; max-width: 20%; max-height: 20%;" />
+        <img src="pic/'.$_GET['id'].'" style="width: auto; height: auto; max-width: 20%; max-height: 20%;" /><br />
+        Average rating: '.round($row['avgRating'], 2).'
         <h3>Comment Section</h3>';
 
         $stmtRating = $conn->prepare("SELECT t1.*, t2.fname, t2.lname FROM ratings as t1, user as t2 WHERE t1.productID = ? AND t1.userID = t2.userID ORDER BY t1.commentDate");

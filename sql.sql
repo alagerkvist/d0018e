@@ -32,6 +32,7 @@ CREATE TABLE `product`(
        price int(11) NOT NULL,
        prodCatTitle varchar(32) NOT NULL,
        visible BOOLEAN DEFAULT TRUE NOT NULL,
+       avgRating float NOT NULL,
        CHECK (qty >= 0),
        PRIMARY KEY(productID),
        FOREIGN KEY(prodCatTitle) REFERENCES prodCat(title)
