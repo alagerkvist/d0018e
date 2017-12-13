@@ -5,29 +5,31 @@
   require_once '../include/conn.php';
 
   if(isset($_POST['updateProd'])){
-    $stmt = $conn->prepare("UPDATE product SET title = ?, `desc` = ?, qty = ?, price = ?, prodCatTitle = ?, visible = ? WHERE productID = ?");
-    $stmt->bindParam(1, $_POST['title']);
-    $stmt->bindParam(2, $_POST['desc']);
-    $stmt->bindParam(3, intval($_POST['qty']), PDO::PARAM_INT);
-    $stmt->bindParam(4, intval($_POST['price']), PDO::PARAM_INT);
-    $stmt->bindParam(5, $_POST['cat']);
-    $stmt->bindParam(6, $_POST['visible']);
-    $stmt->bindParam(7, $_GET['id']);
+    if($_POST['qty'] >= 0){
+      $stmt = $conn->prepare("UPDATE product SET title = ?, `desc` = ?, qty = ?, price = ?, prodCatTitle = ?, visible = ? WHERE productID = ?");
+      $stmt->bindParam(1, $_POST['title']);
+      $stmt->bindParam(2, $_POST['desc']);
+      $stmt->bindParam(3, intval($_POST['qty']), PDO::PARAM_INT);
+      $stmt->bindParam(4, intval($_POST['price']), PDO::PARAM_INT);
+      $stmt->bindParam(5, $_POST['cat']);
+      $stmt->bindParam(6, $_POST['visible']);
+      $stmt->bindParam(7, $_GET['id']);
+      if(getimagesize($_FILES["pic"]["tmp_name"]) !== false) {
+        $target_dir = "../pic/";
+        $target_file = $target_dir . basename($_FILES["pic"]["name"]);
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        if (move_uploaded_file($_FILES["pic"]["tmp_name"], $target_dir.$_GET['id'])) {
 
-    if(getimagesize($_FILES["pic"]["tmp_name"]) !== false) {
-      $target_dir = "../pic/";
-      $target_file = $target_dir . basename($_FILES["pic"]["name"]);
-      $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-      if (move_uploaded_file($_FILES["pic"]["tmp_name"], $target_dir.$_GET['id'])) {
-        $stmt->execute();
-      }else{
-        echo 'File didnt go thur';
+        }else{
+          echo 'File didnt go thur';
+        }
+      }else {
+        echo 'Wrong file';
       }
-    }else {
-      echo 'Wrong file';
+      $stmt->execute();
     }
-    //header("Location: updateProduct.php");
-    //exit();
+    header("Location: updateProduct.php");
+    exit();
   }
 ?>
 

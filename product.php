@@ -83,6 +83,11 @@
   $stmt->setFetchMode(PDO::FETCH_ASSOC);
   $row = $stmt->fetch();
 
+  if($row['visible'] == 0){
+    header("Location: /");
+    exit();
+  }
+
   if(isset($_POST['addToCart'])){
     if(!isset($_SESSION['user'])){
       echo '<script language="javascript">alert("Login first!"); </script>';
@@ -167,8 +172,9 @@
         while($rad = $stmtRating->fetch()){
           $rating = ($rad['rating'] != NULL) ? 'Giving rating: '.$rad['rating'] : '';
           $comment = ($rad['comment'] != NULL) ? $rad['comment'] : '';
-          echo '<p>'.$rad['fname'].' '.$rad['lname'].' '.$rating.'</p>
-          <p>'.$comment.'</p>';
+          echo '<div id="comment" style="background-color: grey; width: 40%; ">
+          <p>'.$rad['fname'].' '.$rad['lname'].' '.$rating.'</p>
+          <p>'.nl2br($comment).'</p></div>';
         }
       ?>
   </body>

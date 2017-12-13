@@ -88,7 +88,7 @@ if(!isset($_POST['checkout'])){
       <td></td>
       <td>'.$_SESSION['totalPrice'].'</td></table>
       <form method="post" action="checkout.php">
-      <button type="submit" name="purchase">Purchase</button>
+      <button type="submit" name="purchase">Place order</button>
       </form>';
     }
 
