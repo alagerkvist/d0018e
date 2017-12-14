@@ -44,8 +44,6 @@ if(isset($_POST['update'])){
         }
         if($checkQty){
           $conn->commit();
-          header("Location: processOrder.php");
-          exit();
         }
       }catch(Exception $e){
         //echo 'BIG NO!<br />';
@@ -54,6 +52,8 @@ if(isset($_POST['update'])){
       }
     }
   }
+  header("Location: processOrder.php");
+  exit();
 }
 ?>
 
