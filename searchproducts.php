@@ -1,7 +1,7 @@
 <?php
   include 'include/conn.php';
   if(isset($_GET['cat'])){
-    $stmt = $conn->prepare("SELECT * FROM product WHERE title LIKE CONCAT ('%', ?, '%') AND prodCatTitle = ?");
+    $stmt = $conn->prepare("SELECT * FROM product WHERE title LIKE CONCAT ('%', ?, '%') AND prodCatTitle = ? AND visible = 1");
     $stmt->bindParam(1, $_GET['search']);
     $stmt->bindParam(2, $_GET['cat']);
   }else{
