@@ -74,7 +74,7 @@ function getData($orderStatus, $conn){
 <html>
   <head>
     <title>My orders</title>
-    <link href="/CSS/styles.css" rel="stylesheet">
+    <link href="/~davjom-5/CSS/styles.css" rel="stylesheet">
     <script language="javascript">
       function show(x){
         let a = document.getElementById(x);

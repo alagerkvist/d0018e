@@ -7,7 +7,7 @@
         unset($_SESSION['cart']);
         //unset($_SESSION['fName']);
         //unset($_SESSION['lName']);
-        header("Location: /");
+        header("Location: /~davjom-5/");
         exit();
     }
 ?>

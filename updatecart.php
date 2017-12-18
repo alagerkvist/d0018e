@@ -1,7 +1,7 @@
 <?php
-  include 'include/Person.php';
+  include '~davjom-5/include/Person.php';
   session_start();
-  include 'include/conn.php';
+  include '~davjom-5/include/conn.php';
 
   try{
     $stmt = $conn->prepare("UPDATE basketItem SET qty = ? WHERE userID = ? and productID = ? LIMIT 1");

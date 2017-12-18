@@ -23,12 +23,12 @@
             $_SESSION['fName'] = $user['fName'];
             $_SESSION['lName'] = $user['lName'];
           */
-          header("Location: /");
+          header("Location: /~davjom-5/");
           exit();
         }else{
             echo '<script language="javascript">
             alert("Wrong credential");
-            location.href = "/";
+            location.href = "/~davjom-5/";
             </script>';
         }
     }

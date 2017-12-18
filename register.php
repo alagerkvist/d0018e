@@ -2,7 +2,7 @@
   session_start();
   include 'include/conn.php';
   if(isset($_SESSION['user'])){
-    header("Location: /");
+    header("Location: /~davjom-5/");
     exit();
   }
 
@@ -51,7 +51,7 @@
         $stmt->bindParam(4, $_POST['password']);
         $stmt->bindParam(5, $_POST['email']);
         $stmt->execute();
-        header("Location: /");
+        header("Location: /~davjom-5/");
         exit();
       }else{
         echo $msg;
@@ -65,7 +65,7 @@
 <html>
 <head>
   <title>Register</title>
-  <link href="/CSS/styles.css" rel="stylesheet">
+  <link href="/~davjom-5/CSS/styles.css" rel="stylesheet">
 </head>
 <?php
 	require_once 'include/header.php';

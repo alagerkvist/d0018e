@@ -84,7 +84,7 @@
   $row = $stmt->fetch();
 
   if($row['visible'] == 0){
-    header("Location: /");
+    header("Location: /~davjom-5/");
     exit();
   }
 
@@ -109,7 +109,7 @@
 <html>
   <head>
     <title><?php echo $row['prodCatTitle'].' - '.$row['title']; ?></title>
-    <link href="/CSS/styles.css" rel="stylesheet">
+    <link href="/~davjom-5/CSS/styles.css" rel="stylesheet">
     <script language="javascript">
 
       function showHideComment(but){

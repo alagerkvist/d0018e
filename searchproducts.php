@@ -21,7 +21,7 @@
   </tr>';
   while($row = $stmt->fetch()){
     echo '<tr>
-    <td><img src="/pic/'.$row['productID'].'" width="20" height="20" /></td>
+    <td><img src="pic/'.$row['productID'].'" width="20" height="20" /></td>
     <td><a href="product.php?id='.$row['productID'].'">'.$row['title'].'</a></td>
     <td>'.$row['qty'].'</td>
     <td>'.$row['price'].'</td>

@@ -49,7 +49,7 @@ if(!isset($_POST['checkout'])){
 
 ?>
 <head>
-  <link href="CSS/styles.css" rel="stylesheet">
+  <link href="/~davjom-5/CSS/styles.css" rel="stylesheet">
 
 </head>
 
